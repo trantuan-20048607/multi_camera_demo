@@ -7,7 +7,7 @@
 #include <opencv2/imgproc.hpp>
 
 #include "3rdparty/easylogging++/easylogging++.h"
-#include "modules/camera-dh/dh_camera.h"
+#include "modules/camera-dh/camera_dh.h"
 
 int main() {
     DHCamera cam = DHCamera();

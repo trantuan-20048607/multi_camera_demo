@@ -60,7 +60,7 @@ if ((status_code) != GX_STATUS_SUCCESS) {               \
     return false;                                       \
 }
 
-class DHCamera : public Camera {
+class DHCamera final : public Camera {
 public:
     DHCamera() : device_(nullptr),
                  color_filter_(GX_COLOR_FILTER_NONE),
@@ -76,35 +76,35 @@ public:
 
     DHCamera &operator=(const DHCamera &&) = delete;
 
-    ~DHCamera() override = default;
+    ~DHCamera() final = default;
 
-    bool OpenCamera(const std::string &serial_number, const std::string &config_file) override;
+    bool OpenCamera(const std::string &serial_number, const std::string &config_file) final;
 
-    bool CloseCamera() override;
+    bool CloseCamera() final;
 
-    bool StartStream() override;
+    bool StartStream() final;
 
-    bool StopStream() override;
+    bool StopStream() final;
 
-    bool IsConnected() override;
+    bool IsConnected() final;
 
-    inline bool GetImage(cv::Mat &image) override { return buffer_.Pop(image); }
+    inline bool GetImage(cv::Mat &image) final { return buffer_.Pop(image); }
 
-    inline bool ExportConfigurationFile(const std::string &file_path) override {
+    inline bool ExportConfigurationFile(const std::string &file_path) final {
         GX_STATUS status_code = GXExportConfigFile(device_, file_path.c_str());
         GX_CHECK_STATUS(status_code)
         LOG(INFO) << "Saved " << serial_number_ << "'s configuration to " << file_path << ".";
         return true;
     }
 
-    inline bool ImportConfigurationFile(const std::string &file_path) override {
+    inline bool ImportConfigurationFile(const std::string &file_path) final {
         GX_STATUS status_code = GXImportConfigFile(device_, file_path.c_str());
         GX_CHECK_STATUS(status_code)
         LOG(INFO) << "Imported " << serial_number_ << "'s configuration from " << file_path << ".";
         return true;
     }
 
-    inline bool SetExposureTime(uint32_t exposure_time) override {
+    inline bool SetExposureTime(uint32_t exposure_time) final {
         if (!SetExposureMode(GX_EXPOSURE_MODE_TIMED)) {
             LOG(ERROR) << "Failed to set " << serial_number_ << "'s exposure mode to timed.";
             return false;
@@ -116,7 +116,7 @@ public:
         return SetExposureTimeDHImplementation((int64_t) exposure_time);
     }
 
-    inline bool SetGainValue(float gain_value) override {
+    inline bool SetGainValue(float gain_value) final {
         if (!SetGainAuto(GX_GAIN_AUTO_OFF)) {
             LOG(ERROR) << "Failed to turn " << serial_number_ << "'s gain auto mode off.";
             return false;

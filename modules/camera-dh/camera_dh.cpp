@@ -8,7 +8,7 @@
 #include "GxIAPI.h"
 #include "DxImageProc.h"
 
-#include "dh_camera.h"
+#include "camera_dh.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 
 uint16_t DHCamera::camera_count_ = 0;

@@ -5,7 +5,7 @@
 #include <opencv2/imgproc.hpp>
 
 #include "3rdparty/easylogging++/easylogging++.h"
-#include "hik_camera.h"
+#include "camera_hik.h"
 
 bool HikCamera::OpenCamera(const std::string &serial_number, const std::string &config_file) {
     // Will not check stream status for recovery.
