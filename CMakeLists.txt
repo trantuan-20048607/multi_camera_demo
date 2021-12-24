@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.21)
 project(multi_camera_demo)
 
+# Custom executable name.
+set(EXECUTABLE_NAME CAM)
+
 # Custom library paths.
 set(MVS_PATH /opt/MVS)
 set(DH_GALAXY_PATH /home/trantuan/Galaxy_camera)
@@ -38,6 +41,9 @@ elseif (CMAKE_BUILD_TYPE STREQUAL Release)
     )
 endif ()
 
+# Avoid syntax error from g++ 11.
+set(CMAKE_CXX_COMPILER /usr/bin/g++-9)
+
 # OpenCV 4.
 find_package(OpenCV 4 REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -63,9 +69,9 @@ file(GLOB SRC ${CMAKE_CURRENT_SOURCE_DIR}/modules/*/*.c*)
 file(GLOB THIRD_PARTY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/*/*.c*)
 
 # Executable file.
-add_executable(multi_camera_demo main.cpp ${SRC} ${THIRD_PARTY_SRC})
+add_executable(${EXECUTABLE_NAME} main.cpp ${SRC} ${THIRD_PARTY_SRC})
 
-target_link_libraries(multi_camera_demo
+target_link_libraries(${EXECUTABLE_NAME}
         ${DH_LIBS}
         ${MVS_LIBS}
         ${OpenCV_LIBS}
