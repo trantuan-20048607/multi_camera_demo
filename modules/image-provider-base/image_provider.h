@@ -12,6 +12,7 @@ public:
 
     virtual bool GetFrame(Frame &) = 0;
 
+protected:
     Buffer<Frame, IP_BUFFER_SIZE> buffer_;
 };
 

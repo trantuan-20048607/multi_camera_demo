@@ -7,8 +7,13 @@
 #include "camera.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 
+/// \brief A macro to create a camera of specified type string. For details, turn to class CameraFactory.
 #define CF_CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
 
+/**
+ * \brief Base class of camera registry.
+ * \warning You should use its subclass CameraRegistry instead of this base class.
+ */
 class CameraRegistryBase {
 public:
     virtual Camera *CreateCamera() = 0;
@@ -23,6 +28,15 @@ protected:
     virtual ~CameraRegistryBase() = default;
 };
 
+/**
+ * \brief Singleton camera factory.  \n
+ *   Use CameraFactory::Instance() to get the only instance pointer.  \n
+ *   Use macro CF_CREATE_CAMERA(registered_type) to create a camera instance.  \n
+ *   Use CameraFactory::Instance::RegisterCamera(camera_type_name, *registry) to register a type of camera.
+ * \warning
+ *   Camera factory will not check whether CameraType is really subclass of Camera base class.
+ *   (Thus, you should ensure that all callings of CameraRegistry constructor are completely under control.)
+ */
 class CameraFactory {
 public:
     CameraFactory(const CameraFactory &) = delete;
@@ -51,6 +65,16 @@ private:
     std::unordered_map<std::string, CameraRegistryBase *> camera_registry_;
 };
 
+/**
+ * \brief Templated camera registry class.
+ * \tparam CameraType Camera type inherited from base class Camera.
+ * \attention Once object is constructed, this type of camera will immediately be registered to camera factory.
+ *   This means the constructed object is useless and should not appear in any other place.
+ *   (Thus, template class though this is, it's better to be treated as a function.)
+ * \warning
+ *   Camera factory will not check whether CameraType is really subclass of Camera base class.
+ *   (Thus, you should ensure that all callings of CameraRegistry constructor are completely under control.)
+ */
 template<class CameraType>
 class CameraRegistry final : public CameraRegistryBase {
 public:

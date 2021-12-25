@@ -12,6 +12,10 @@
  */
 class Camera {
 public:
+    Camera() : stream_running_(false),
+               daemon_thread_id_(0),
+               stop_daemon_thread_flag_(false) {}
+
     virtual ~Camera() = default;
 
     /**
@@ -91,9 +95,9 @@ public:
 
 protected:
     std::string serial_number_;               // Serial number.
-    bool stream_running_ = false;             // Flag shows if stream is running.
-    pthread_t daemon_thread_id_ = 0;          // Daemon thread id.
-    bool stop_daemon_thread_flag_ = false;    // Flag to stop daemon thread.
+    bool stream_running_;             // Flag shows if stream is running.
+    pthread_t daemon_thread_id_;          // Daemon thread id.
+    bool stop_daemon_thread_flag_;    // Flag to stop daemon thread.
     Buffer<cv::Mat, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
 };
 
