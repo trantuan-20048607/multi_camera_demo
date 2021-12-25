@@ -1,17 +1,12 @@
 #ifndef _DH_CAMERA_H_
 #define _DH_CAMERA_H_
 
-#include <string>
-
-#include <opencv2/core.hpp>
 #include "GxIAPI.h"
 #include "DxImageProc.h"
 
-#include "modules/camera-base/camera.h"
-#include "modules/camera-base/camera_factory.h"
 #include "3rdparty/easylogging++/easylogging++.h"
-#include "modules/image-provider-base/buffer.h"
-#include "modules/image-provider-base/frame.h"
+
+#include "modules/camera-base/camera_factory.h"
 
 /**
  * \brief This macro is used to check if the device is successfully initialized.
@@ -89,7 +84,7 @@ public:
 
     bool IsConnected() final;
 
-    inline bool GetImage(cv::Mat &image) final { return buffer_.Pop(image); }
+    inline bool GetFrame(Frame &frame) final { return buffer_.Pop(frame); }
 
     inline bool ExportConfigurationFile(const std::string &file_path) final {
         GX_STATUS status_code = GXExportConfigFile(device_, file_path.c_str());

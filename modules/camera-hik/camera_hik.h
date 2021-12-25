@@ -1,15 +1,11 @@
 #ifndef _HIK_CAMERA_H_
 #define _HIK_CAMERA_H_
 
-#include <string>
-
-#include <opencv2/core.hpp>
 #include "MvCameraControl.h"
 
-#include "modules/camera-base/camera.h"
-#include "modules/camera-base/camera_factory.h"
 #include "3rdparty/easylogging++/easylogging++.h"
-#include "modules/image-provider-base/buffer.h"
+
+#include "modules/camera-base/camera_factory.h"
 
 class [[maybe_unused]] HikCamera final : public Camera {
 public:
@@ -29,7 +25,7 @@ public:
 
     bool StartStream() final;
 
-    bool GetImage(cv::Mat &) final;
+    inline bool GetFrame(Frame &frame) final { return buffer_.Pop(frame); }
 
     bool StopStream() final;
 

@@ -1,10 +1,9 @@
-#include <string>
 #include <iomanip>
 #include <chrono>
-#include <utility>
 
-#include "modules/yaml/yaml.h"
 #include "3rdparty/easylogging++/easylogging++.h"
+
+#include "yaml.h"
 
 YAML::YAML(std::string file_name, FileMode file_mode) :
         file_name_(std::move(file_name)),

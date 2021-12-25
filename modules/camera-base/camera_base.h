@@ -1,11 +1,8 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include <string>
-
-#include <opencv2/core/mat.hpp>
-
 #include "modules/image-provider-base/buffer.h"
+#include "modules/image-provider-base/frame.h"
 
 /**
  * \brief Camera base class.
@@ -34,11 +31,11 @@ public:
     virtual bool CloseCamera() = 0;
 
     /**
-     * \brief Get an image from internal image buffer.
-     * \param [out] image Acquired image will be stored here.
-     * \return A boolean shows if buffer is not empty, or if you can successfully get an image.
+     * \brief Get a frame with image and time stamp from internal image buffer.
+     * \param [out] frame Acquired frame will be stored here.
+     * \return A boolean shows if buffer is not empty, or if you can successfully get an frame.
      */
-    virtual bool GetImage(cv::Mat &image) = 0;
+    virtual bool GetFrame(Frame &frame) = 0;
 
     /**
      * \brief Start the stream.
@@ -98,7 +95,7 @@ protected:
     bool stream_running_;             // Flag shows if stream is running.
     pthread_t daemon_thread_id_;          // Daemon thread id.
     bool stop_daemon_thread_flag_;    // Flag to stop daemon thread.
-    Buffer<cv::Mat, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
+    Buffer<Frame, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
 };
 
 #endif  // _CAMERA_H_

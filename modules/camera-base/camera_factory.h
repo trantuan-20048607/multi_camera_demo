@@ -1,13 +1,14 @@
 #ifndef _CAMERA_FACTORY_H_
 #define _CAMERA_FACTORY_H_
 
-#include <string>
 #include <unordered_map>
 
-#include "camera.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 
-/// \brief A macro to create a camera of specified type string. For details, turn to class CameraFactory.
+#include "camera_base.h"
+
+/// \brief A macro to create a camera of specified type string.
+///   For details, turn to class CameraFactory.
 #define CF_CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
 
 /**

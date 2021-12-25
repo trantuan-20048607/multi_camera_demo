@@ -1,15 +1,9 @@
-#include <string>
 #include <stdexcept>
 #include <unistd.h>
 
-#include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "GxIAPI.h"
-#include "DxImageProc.h"
-
 #include "camera_dh.h"
-#include "3rdparty/easylogging++/easylogging++.h"
 
 uint16_t DHCamera::camera_count_ = 0;
 
@@ -269,7 +263,8 @@ void DHCamera::DefaultCaptureCallback(GX_FRAME_CALLBACK_PARAM *frame_callback) {
                             self->raw_8_to_rgb_24_cache_);
     cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
 
-    self->buffer_.Push(image);
+    // TODO Unify data format.
+    self->buffer_.Push(Frame(image, frame_callback->nTimestamp));
 }
 
 bool DHCamera::Raw8Raw16ToRGB24(GX_FRAME_CALLBACK_PARAM *frame_callback) {

@@ -1,9 +1,10 @@
 #ifndef _BUFFER_H_
 #define _BUFFER_H_
 
-#define IP_BUFFER_SIZE 4
-
 #include <mutex>
+
+/// \brief Buffer size for image provider and camera.
+#define IP_BUFFER_SIZE 4
 
 /**
  * \brief Ring buffer with mutex.

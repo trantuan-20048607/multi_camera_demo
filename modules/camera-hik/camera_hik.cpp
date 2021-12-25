@@ -1,10 +1,7 @@
-#include <string>
 #include <unistd.h>
 
-#include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "3rdparty/easylogging++/easylogging++.h"
 #include "camera_hik.h"
 
 /**
@@ -166,25 +163,24 @@ bool HikCamera::StartStream() {
 
 void HikCamera::ImageCallbackEx(unsigned char *image_data, MV_FRAME_OUT_INFO_EX *frame_info, void *obj) {
     auto self = (HikCamera *) obj;
-    cv::Mat frame;
+    cv::Mat image;
 
     if (frame_info->enPixelType == PixelType_Gvsp_RGB8_Packed) {
-        frame = cv::Mat(frame_info->nHeight, frame_info->nWidth, CV_8UC3, image_data);
-        self->buffer_.Push(frame);
+        auto time_stamp = (uint64_t) frame_info->nDevTimeStampHigh;
+        time_stamp <<= 32;
+        time_stamp += frame_info->nDevTimeStampLow;
+        image = cv::Mat(frame_info->nHeight, frame_info->nWidth, CV_8UC3, image_data);
+        self->buffer_.Push(Frame(image, time_stamp));
     } else if (frame_info->enPixelType == PixelType_Gvsp_BayerRG8) {
-        frame = cv::Mat(frame_info->nHeight, frame_info->nWidth, CV_8UC1, image_data);
-        cv::cvtColor(frame, frame, cv::COLOR_BayerRG2RGB);
-        self->buffer_.Push(frame);
+        auto time_stamp = (uint64_t) frame_info->nDevTimeStampHigh;
+        time_stamp <<= 32;
+        time_stamp += frame_info->nDevTimeStampLow;
+        image = cv::Mat(frame_info->nHeight, frame_info->nWidth, CV_8UC1, image_data);
+        cv::cvtColor(image, image, cv::COLOR_BayerRG2RGB);
+
+        // TODO Unify data format.
+        self->buffer_.Push(Frame(image, time_stamp));
     }
-}
-
-bool HikCamera::GetImage(cv::Mat &image) {
-    if (device_ == nullptr) return false;
-    if (!stream_running_) return false;
-
-    if (!buffer_.Empty())
-        image.release();
-    return buffer_.Pop(image);
 }
 
 bool HikCamera::StopStream() {
