@@ -7,6 +7,14 @@
 #include "3rdparty/easylogging++/easylogging++.h"
 #include "camera_hik.h"
 
+/**
+ * \warning Camera registry will be initialized before the program entering the main function!
+ *   This means any error occurs here will not be caught and debugged.
+ *   (So, do not use this variable in any other place.)
+ */
+[[maybe_unused]] CameraRegistry<HikCamera> HikCamera::hik_camera_registry_ =
+        CameraRegistry<HikCamera>("HikCamera");
+
 bool HikCamera::OpenCamera(const std::string &serial_number, const std::string &config_file) {
     // Will not check stream status for recovery.
     // if (!stream_running_) return false;

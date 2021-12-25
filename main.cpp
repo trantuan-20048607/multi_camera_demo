@@ -6,27 +6,27 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
+#include "modules/camera-base/camera_factory.h"
 #include "3rdparty/easylogging++/easylogging++.h"
-#include "modules/camera-dh/camera_dh.h"
 
 int main() {
-    DHCamera cam = DHCamera();
+    auto cam = CREATE_CAMERA("DHCamera");
 
     el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
     el::Loggers::addFlag(el::LoggingFlag::MultiLoggerSupport);
 
     LOG(INFO) << "Waiting for camera...";
 
-    while (!cam.OpenCamera("KE0210010102", "../config/cameras/KE0210010102.txt"))
+    while (!cam->OpenCamera("KE0210010102", "../config/cameras/KE0210010102.txt"))
         sleep(1);
 
-    cam.StartStream();
+    cam->StartStream();
     cv::Mat img;
     uint32_t frame_count = 0;
     uint32_t last_second_frame_cont = 0;
     time_t start_time = time(nullptr), end_time;
     for (uint32_t fps = 0; cv::waitKey(1) != 'q'; ++frame_count) {
-        if (!cam.GetImage(img)) {
+        if (!cam->GetImage(img)) {
             --frame_count;
             continue;
         }
@@ -50,7 +50,7 @@ int main() {
         }
     }
     img.release();
-    cam.StopStream();
-    cam.CloseCamera();
+    cam->StopStream();
+    cam->CloseCamera();
     return 0;
 }

@@ -13,6 +13,14 @@
 
 uint16_t DHCamera::camera_count_ = 0;
 
+/**
+ * \warning Camera registry will be initialized before the program entering the main function!
+ *   This means any error occurs here will not be caught and debugged.
+ *   (So, do not use this variable in any other place.)
+ */
+[[maybe_unused]] CameraRegistry<DHCamera> DHCamera::dh_camera_registry_ =
+        CameraRegistry<DHCamera>("DHCamera");
+
 bool DHCamera::OpenCamera(const std::string &serial_number, const std::string &config_file) {
     // Will NOT check stream status for restart.
     // if (stream_running_) return false;

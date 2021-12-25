@@ -7,6 +7,7 @@
 #include "MvCameraControl.h"
 
 #include "modules/camera-base/camera.h"
+#include "modules/camera-base/camera_factory.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 #include "modules/image-provider-base/buffer.h"
 
@@ -93,6 +94,8 @@ private:
                    << std::to_string(exposure_time) << ".";
         return true;
     }
+
+    [[maybe_unused]] static CameraRegistry<HikCamera> hik_camera_registry_;
 };
 
 #endif  // _HIK_CAMERA_H_

@@ -8,6 +8,7 @@
 #include "DxImageProc.h"
 
 #include "modules/camera-base/camera.h"
+#include "modules/camera-base/camera_factory.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 #include "modules/image-provider-base/buffer.h"
 #include "modules/image-provider-base/frame.h"
@@ -271,6 +272,8 @@ private:
 
     unsigned char *raw_8_to_rgb_24_cache_;
     unsigned char *raw_16_to_8_cache_;
+
+    [[maybe_unused]] static CameraRegistry<DHCamera> dh_camera_registry_;
 };
 
 #endif  // _DH_CAMERA_H_
