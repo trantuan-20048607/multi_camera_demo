@@ -10,7 +10,7 @@
 #include "3rdparty/easylogging++/easylogging++.h"
 
 int main() {
-    auto cam = CREATE_CAMERA("DHCamera");
+    auto cam = CF_CREATE_CAMERA("DHCamera");
 
     el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
     el::Loggers::addFlag(el::LoggingFlag::MultiLoggerSupport);

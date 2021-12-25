@@ -11,7 +11,7 @@
 #include "3rdparty/easylogging++/easylogging++.h"
 #include "modules/image-provider-base/buffer.h"
 
-class HikCamera final : public Camera {
+class [[maybe_unused]] HikCamera final : public Camera {
 public:
     HikCamera() : device_(nullptr) {}
 

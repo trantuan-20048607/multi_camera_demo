@@ -61,7 +61,7 @@ if ((status_code) != GX_STATUS_SUCCESS) {               \
     return false;                                       \
 }
 
-class DHCamera final : public Camera {
+class [[maybe_unused]] DHCamera final : public Camera {
 public:
     DHCamera() : device_(nullptr),
                  color_filter_(GX_COLOR_FILTER_NONE),

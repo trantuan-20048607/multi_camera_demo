@@ -7,7 +7,7 @@
 #include "camera.h"
 #include "3rdparty/easylogging++/easylogging++.h"
 
-#define CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
+#define CF_CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
 
 class CameraRegistryBase {
 public:
