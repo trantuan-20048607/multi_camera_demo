@@ -56,6 +56,11 @@ if ((status_code) != GX_STATUS_SUCCESS) {               \
     return false;                                       \
 }
 
+/**
+ * \brief DaHeng camera class implementation.
+ * \warning NEVER directly use this class to create camera!  \n
+ *   Instead, turn to CameraFactory class and use CF_CREATE_CAMERA("DHCamera").
+ */
 class [[maybe_unused]] DHCamera final : public Camera {
 public:
     DHCamera() : device_(nullptr),
@@ -254,7 +259,7 @@ private:
 
     /**
      * \brief Daemon thread main function.
-     * \param [in] obj Camera itself.
+     * \param [in] obj Place camera itself here.
      * \attention !! Do NOT use this function in another place !!
      */
     static void *DaemonThreadFunction(void *obj);

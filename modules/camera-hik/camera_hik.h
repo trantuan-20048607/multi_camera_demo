@@ -7,6 +7,11 @@
 
 #include "modules/camera-base/camera_factory.h"
 
+/**
+ * \brief HikRobot camera class implementation.
+ * \warning NEVER directly use this class to create camera!  \n
+ *   Instead, turn to CameraFactory class and use CF_CREATE_CAMERA("HikCamera").
+ */
 class [[maybe_unused]] HikCamera final : public Camera {
 public:
     HikCamera() : device_(nullptr) {}

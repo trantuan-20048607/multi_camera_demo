@@ -6,6 +6,9 @@
 
 /**
  * \brief Camera base class.
+ * \note You cannot directly construct objects.  \n
+ *   Instead, find camera types in subclass documents,
+ *   include camera_factory.h and use CF_CREATE_CAMERA macro.
  */
 class Camera {
 public:
@@ -86,15 +89,16 @@ public:
     virtual bool SetGainValue(float gain) = 0;
 
     /**
+     * \brief Get serial number.
      * \return Serial number of this camera.
      */
-    inline std::string GetSerialNumber() { return serial_number_; };
+    inline std::string GetSerialNumber() { return serial_number_; }
 
 protected:
-    std::string serial_number_;               // Serial number.
-    bool stream_running_;             // Flag shows if stream is running.
-    pthread_t daemon_thread_id_;          // Daemon thread id.
-    bool stop_daemon_thread_flag_;    // Flag to stop daemon thread.
+    std::string serial_number_;             // Serial number.
+    bool stream_running_;                   // Flag shows if stream is running.
+    pthread_t daemon_thread_id_;            // Daemon thread id.
+    bool stop_daemon_thread_flag_;          // Flag to stop daemon thread.
     Buffer<Frame, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
 };
 
