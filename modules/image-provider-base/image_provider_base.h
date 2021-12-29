@@ -10,15 +10,17 @@ public:
 
     /**
      * \brief Initialize by specified configuration file.
-     * \param file_path Configuration file path.
+     * \param [in] file_path Configuration file path.
      * \return A boolean shows if initialization succeeded.
      */
     virtual bool Initialize(const std::string &file_path) = 0;
 
-    virtual bool GetFrame(Frame &) = 0;
-
-protected:
-    Buffer<Frame, IP_BUFFER_SIZE> buffer_;
+    /**
+     * \brief Get a frame.
+     * \param [out] frame OpenCV image reference.
+     * \return A boolean shows if frame is complete.
+     */
+    virtual bool GetFrame(Frame &frame) = 0;
 };
 
 #endif  // _IMAGE_PROVIDER_BASE_H_

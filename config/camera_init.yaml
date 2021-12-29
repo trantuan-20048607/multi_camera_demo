@@ -1,0 +1,4 @@
+# Define where to find camera index.
+CAMERA_INDEX_FILE: "../config/cameras.yaml"
+
+

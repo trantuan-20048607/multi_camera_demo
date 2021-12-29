@@ -263,7 +263,6 @@ void DHCamera::DefaultCaptureCallback(GX_FRAME_CALLBACK_PARAM *frame_callback) {
                             self->raw_8_to_rgb_24_cache_);
     cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
 
-    // TODO Unify data format.
     self->buffer_.Push(Frame(image, frame_callback->nTimestamp));
 }
 

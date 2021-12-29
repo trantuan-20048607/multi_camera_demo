@@ -178,7 +178,6 @@ void HikCamera::ImageCallbackEx(unsigned char *image_data, MV_FRAME_OUT_INFO_EX 
         image = cv::Mat(frame_info->nHeight, frame_info->nWidth, CV_8UC1, image_data);
         cv::cvtColor(image, image, cv::COLOR_BayerRG2RGB);
 
-        // TODO Unify data format.
         self->buffer_.Push(Frame(image, time_stamp));
     }
 }

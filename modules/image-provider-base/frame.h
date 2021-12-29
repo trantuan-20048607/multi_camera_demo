@@ -3,6 +3,12 @@
 
 #include <opencv2/core/core.hpp>
 
+/**
+ * \brief Single frame structure.
+ * \details 2 ways of initializing method provided:  \n
+ *   (Default) Directly use Frame() to initialize an empty and useless frame.  \n
+ *   (Manual) Use Frame(_image, _time_stamp) to initialize a complete frame.
+ */
 struct Frame {
     cv::Mat image;
     uint64_t time_stamp;
@@ -12,4 +18,4 @@ struct Frame {
     Frame() : time_stamp(0) {}
 };
 
-#endif
+#endif  // _FRAME_H_

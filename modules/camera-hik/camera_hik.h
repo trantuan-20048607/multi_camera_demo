@@ -79,12 +79,26 @@ public:
     }
 
 private:
-    void *device_;
+    /**
+     * \brief Internal image callback function.
+     * \param image_data Internal image data.
+     * \param frame_info Internal frame info structure.
+     * \param obj It should be camera itself.
+     */
+    static void __stdcall ImageCallbackEx(unsigned char *image_data, MV_FRAME_OUT_INFO_EX *frame_info, void *obj);
 
-    static void __stdcall ImageCallbackEx(unsigned char *, MV_FRAME_OUT_INFO_EX *, void *);
-
+    /**
+     * \brief Daemon thread main function.
+     * \param [in] obj Place camera itself here.
+     * \attention !! Do NOT use this function in another place !!
+     */
     static void *DaemonThreadFunction(void *);
 
+    /**
+     * \brief HikCamera implementation of exposure time setting.
+     * \param exposure_time Float exposure time.
+     * \return A boolean shows if exposure time is successfully set.
+     */
     inline bool SetExposureTimeHikImplementation(float exposure_time) {
         if (MV_CC_SetFloatValue(device_, "ExposureTime", exposure_time) != MV_OK) {
             LOG(ERROR) << "Failed to set " << serial_number_ << "'s exposure time to "
@@ -96,7 +110,9 @@ private:
         return true;
     }
 
-    [[maybe_unused]] static CameraRegistry<HikCamera> hik_camera_registry_;
+    void *device_;  // Device handle.
+
+    [[maybe_unused]] static CameraRegistry<HikCamera> hik_camera_registry_;  // Own registry for Hik Camera.
 };
 
 #endif  // _HIK_CAMERA_H_

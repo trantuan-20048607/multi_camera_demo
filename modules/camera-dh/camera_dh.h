@@ -126,6 +126,11 @@ public:
     }
 
 private:
+    /**
+     * \brief Register image callback for DH camera.
+     * \param callback Callback param.
+     * \return A boolean shows if callback is registered.
+     */
     inline bool RegisterCaptureCallback(GXCaptureCallBack callback) {
         GX_STATUS status_code;
         status_code = GXRegisterCaptureCallback(device_,
@@ -136,6 +141,10 @@ private:
         return true;
     }
 
+    /**
+     * \brief Unregister image callback for DH camera.
+     * \return A boolean shows if callback is unregistered.
+     */
     inline bool UnregisterCaptureCallback() {
         GX_STATUS status_code;
         status_code = GXUnregisterCaptureCallback(device_);
@@ -144,6 +153,11 @@ private:
         return true;
     }
 
+    /**
+     * \brief DHCamera implementation of exposure time setting.
+     * \param exposure_time 64 bit integer exposure time.
+     * \return A boolean shows if exposure time is successfully set.
+     */
     inline bool SetExposureTimeDHImplementation(int64_t exposure_time) {
         GX_STATUS status_code;
         status_code = GXSetEnum(device_,
@@ -185,6 +199,11 @@ private:
         return true;
     }
 
+    /**
+     * \brief DHCamera implementation of gain value setting.
+     * \param gain Double gain value.
+     * \return A boolean shows if gain value is successfully set.
+     */
     inline bool SetGainValueDHImplementation(double gain) {
         GX_STATUS status_code;
         status_code = GXSetEnum(device_,
@@ -264,16 +283,16 @@ private:
      */
     static void *DaemonThreadFunction(void *obj);
 
-    static uint16_t camera_count_;
+    static uint16_t camera_count_;  // Global count of DH camera for releasing and loading library.
 
-    GX_DEV_HANDLE device_;
-    int64_t color_filter_;
-    int64_t payload_size_;
+    GX_DEV_HANDLE device_;  // Device handle.
+    int64_t color_filter_;  // Color filter type.
+    int64_t payload_size_;  // Payload size.
 
-    unsigned char *raw_8_to_rgb_24_cache_;
-    unsigned char *raw_16_to_8_cache_;
+    unsigned char *raw_8_to_rgb_24_cache_;  // Cache for converting image from raw8 to rgb24.
+    unsigned char *raw_16_to_8_cache_;      // Cache for converting image from raw16 to raw8.
 
-    [[maybe_unused]] static CameraRegistry<DHCamera> dh_camera_registry_;
+    [[maybe_unused]] static CameraRegistry<DHCamera> dh_camera_registry_;  // Own registry for DH Camera.
 };
 
 #endif  // _DH_CAMERA_H_
