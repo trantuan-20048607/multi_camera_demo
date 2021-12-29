@@ -144,3 +144,7 @@ cache
 ### Log
 log
 !log/.keep
+
+### Documentation
+doc
+!doc/build/.keep
