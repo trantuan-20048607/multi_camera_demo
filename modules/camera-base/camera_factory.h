@@ -7,9 +7,7 @@
 
 #include "camera_base.h"
 
-/**
- * \brief A macro to create a camera of specified type string. For details, turn to class CameraFactory.
- */
+/// \brief A macro to create a camera of specified type string. For details, turn to class CameraFactory.
 #define CF_CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
 
 /**
@@ -118,4 +116,4 @@ public:
     inline Camera *CreateCamera() final { return new CameraType(); }
 };
 
-#endif  //_CAMERA_FACTORY_H_
+#endif  // _CAMERA_FACTORY_H_
