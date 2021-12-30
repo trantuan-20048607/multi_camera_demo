@@ -10,7 +10,7 @@
  * \brief Ring buffer with mutex.
  * \tparam Type Type of elements in this ring buffer.
  * \tparam size Max size of this ring buffer.
- * \attention Length must be 2^N.
+ * \attention Size must be 2^N.
  */
 template<typename Type, unsigned int size>
 class Buffer {
@@ -23,10 +23,7 @@ private:
     const unsigned int and_to_mod_ = size - 1;
 
 public:
-    Buffer<Type, size>() : head_(0), tail_(0) {
-        assert(size);
-        assert(!(size & (size - 1)));
-    }
+    Buffer<Type, size>() : head_(0), tail_(0) {}
 
     ~Buffer() = default;
 

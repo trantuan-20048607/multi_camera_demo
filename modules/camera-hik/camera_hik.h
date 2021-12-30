@@ -18,11 +18,7 @@ public:
 
     HikCamera(const HikCamera &) = delete;
 
-    HikCamera(HikCamera &&) = delete;
-
     HikCamera &operator=(const HikCamera &) = delete;
-
-    HikCamera &operator=(const HikCamera &&) = delete;
 
     ~HikCamera() final = default;
 

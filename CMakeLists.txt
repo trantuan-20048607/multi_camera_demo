@@ -19,7 +19,7 @@ add_compile_options(
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
     add_compile_options(
             # Complete debugger support.
-            -O0
+            -O1
             # Default log file path.
             -DELPP_DEFAULT_LOG_FILE="../log/debug.log"
             # Enable stack backtrace log when the program crashes.

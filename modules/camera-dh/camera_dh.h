@@ -4,8 +4,6 @@
 #include "GxIAPI.h"
 #include "DxImageProc.h"
 
-#include "3rdparty/easylogging++/easylogging++.h"
-
 #include "modules/camera-base/camera_factory.h"
 
 /**
@@ -71,11 +69,7 @@ public:
 
     DHCamera(const DHCamera &) = delete;
 
-    DHCamera(DHCamera &&) = delete;
-
     DHCamera &operator=(const DHCamera &) = delete;
-
-    DHCamera &operator=(const DHCamera &&) = delete;
 
     ~DHCamera() final = default;
 

@@ -6,7 +6,13 @@
 
 class ImageProvider {
 public:
+    ImageProvider() = default;
+
     virtual ~ImageProvider() = default;
+
+    ImageProvider(const ImageProvider &) = delete;
+
+    ImageProvider &operator=(const ImageProvider &) = delete;
 
     /**
      * \brief Initialize by specified configuration file.
@@ -21,6 +27,10 @@ public:
      * \return A boolean shows if frame is complete.
      */
     virtual bool GetFrame(Frame &frame) = 0;
+
+protected:
+    cv::Mat intrinsic_mat_;
+    cv::Mat distortion_mat_;
 };
 
 #endif  // _IMAGE_PROVIDER_BASE_H_

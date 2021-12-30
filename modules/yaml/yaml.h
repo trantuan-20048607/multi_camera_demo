@@ -3,9 +3,7 @@
 
 #include <opencv2/core/core.hpp>
 
-/**
- * \brief YAML file operator based on OpenCV file storage.
- */
+/// \brief YAML file operator based on OpenCV file storage.
 class YAML {
 public:
     enum FileMode {
@@ -19,17 +17,13 @@ public:
      * \param file_name File name.
      * \param file_mode File opening method.
      */
-    YAML(std::string file_name, FileMode file_mode = FileMode::READ);
+    YAML(std::string file_name, FileMode file_mode);
 
     ~YAML();
 
     YAML(const YAML &) = delete;
 
-    YAML(YAML &&) = delete;
-
     YAML &operator=(const YAML &) = delete;
-
-    YAML &operator=(const YAML &&) = delete;
 
     /**
      * \brief Open file.

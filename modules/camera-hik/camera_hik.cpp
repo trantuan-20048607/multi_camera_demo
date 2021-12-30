@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include <execution>
 
 #include <opencv2/imgproc.hpp>
 
@@ -130,14 +130,14 @@ bool HikCamera::OpenCamera(const std::string &serial_number, const std::string &
         LOG(DEBUG) << "Registered " << serial_number_ << "'s capture callback.";
     }
 
+    serial_number_ = serial_number;
+
     // Create daemon thread.
     if (!daemon_thread_id_) {
         stop_daemon_thread_flag_ = false;
         pthread_create(&daemon_thread_id_, nullptr, DaemonThreadFunction, this);
         LOG(DEBUG) << serial_number_ << "'s daemon thread " << std::to_string(daemon_thread_id_) << " started.";
     }
-
-    serial_number_ = serial_number;
 
     LOG(INFO) << "Opened camera " << serial_number << ".";
     return true;
