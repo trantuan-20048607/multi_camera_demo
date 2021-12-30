@@ -17,13 +17,8 @@ int main() {
     char c;
     std::cin >> c;
     std::cin.get();
-    if (c == 'C' || c == 'c') {
-        ip = IPF_CREATE_IMAGE_PROVIDER("IPCamera");
-        while (!ip->Initialize("../config/camera-init.yaml")) sleep(1);
-    } else {
-        ip = IPF_CREATE_IMAGE_PROVIDER("IPVideo");
-        ip->Initialize("../config/video-init.yaml");
-    }
+    ip = IPF_CREATE_IMAGE_PROVIDER((c == 'C' || c == 'c') ? "IPCamera" : "IPVideo");
+    ip->Initialize((c == 'C' || c == 'c') ? "../config/camera-init.yaml" : "../config/video-init.yaml");
 
     for (Frame frame; cv::waitKey(1) != 'q';) {
         if (ip->GetFrame(frame)) {

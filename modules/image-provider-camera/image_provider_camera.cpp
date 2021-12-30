@@ -30,8 +30,8 @@ bool ImageProviderCamera::Initialize(const std::string &file_path) {
 
     // Load global cameras' configuration file.
     std::string all_cams_config_file;
-    try { camera_init_config["ALL_CAMS_CONFIG_FILE"] >> all_cams_config_file; }
-    catch (const std::exception &) {
+    camera_init_config["ALL_CAMS_CONFIG_FILE"] >> all_cams_config_file;
+    if (all_cams_config_file.empty()) {
         LOG(ERROR) << "All cameras' config file configuration not found.";
         return false;
     }
@@ -44,8 +44,8 @@ bool ImageProviderCamera::Initialize(const std::string &file_path) {
 
     // Load global lens' configuration file.
     std::string all_lens_config_file;
-    try { camera_init_config["ALL_LENS_CONFIG_FILE"] >> all_lens_config_file; }
-    catch (const std::exception &) {
+    camera_init_config["ALL_LENS_CONFIG_FILE"] >> all_lens_config_file;
+    if (all_lens_config_file.empty()) {
         LOG(ERROR) << "All lens' config file configuration not found.";
         return false;
     }
@@ -58,8 +58,8 @@ bool ImageProviderCamera::Initialize(const std::string &file_path) {
 
     // Create a camera.
     std::string camera_type;
-    try { all_cams_config[camera_init_config["CAMERA"]]["TYPE"] >> camera_type; }
-    catch (const std::exception &) {
+    all_cams_config[camera_init_config["CAMERA"]]["TYPE"] >> camera_type;
+    if (camera_type.empty()) {
         LOG(ERROR) << "Camera type configuration not found.";
         return false;
     }
@@ -69,28 +69,31 @@ bool ImageProviderCamera::Initialize(const std::string &file_path) {
         return false;
     }
 
+    // Get matrix for PnP.
+    std::string len_type;
+    all_cams_config[camera_init_config["CAMERA"]]["LEN"] >> len_type;
+    all_lens_config[len_type]["IntrinsicMatrix"] >> intrinsic_mat_;
+    all_lens_config[len_type]["DistortionMatrix"] >> distortion_mat_;
+    if (intrinsic_mat_.empty() || distortion_mat_.empty()) {
+        LOG(ERROR) << "Camera len configurations not found.";
+        delete camera_;
+        intrinsic_mat_.release();
+        distortion_mat_.release();
+        return false;
+    }
+
     // Open camera.
     std::string serial_number, camera_config_file;
-    try {
-        all_cams_config[camera_init_config["CAMERA"]]["SN"] >> serial_number;
-        all_cams_config[camera_init_config["CAMERA"]]["CONFIG"] >> camera_config_file;
-    } catch (const std::exception &) {
+    all_cams_config[camera_init_config["CAMERA"]]["SN"] >> serial_number;
+    all_cams_config[camera_init_config["CAMERA"]]["CONFIG"] >> camera_config_file;
+    if (serial_number.empty() || camera_config_file.empty()) {
         LOG(ERROR) << "Camera configurations not found.";
         return false;
     }
     if (!camera_->OpenCamera(serial_number, camera_config_file)) {
         delete camera_;
-        return false;
-    }
-
-    // Get matrix for PnP.
-    std::string len_type;
-    try {
-        all_cams_config[camera_init_config["CAMERA"]]["LEN"] >> len_type;
-        all_lens_config[len_type]["IntrinsicMatrix"] >> intrinsic_mat_;
-        all_lens_config[len_type]["DistortionMatrix"] >> distortion_mat_;
-    } catch (const std::exception &) {
-        LOG(ERROR) << "Camera len configurations not found.";
+        intrinsic_mat_.release();
+        distortion_mat_.release();
         return false;
     }
 

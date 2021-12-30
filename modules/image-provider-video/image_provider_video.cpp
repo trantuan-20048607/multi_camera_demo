@@ -1,5 +1,3 @@
-#include "3rdparty/easylogging++/easylogging++.h"
-
 #include "image_provider_video.h"
 
 /**
@@ -29,8 +27,8 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
 
     // Load global cameras' configuration file.
     std::string all_cams_config_file;
-    try { video_init_config["ALL_CAMS_CONFIG_FILE"] >> all_cams_config_file; }
-    catch (const std::exception &) {
+    video_init_config["ALL_CAMS_CONFIG_FILE"] >> all_cams_config_file;
+    if (all_cams_config_file.empty()) {
         LOG(ERROR) << "All cameras' config file configuration not found.";
         return false;
     }
@@ -43,8 +41,8 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
 
     // Load global lens' configuration file.
     std::string all_lens_config_file;
-    try { video_init_config["ALL_LENS_CONFIG_FILE"] >> all_lens_config_file; }
-    catch (const std::exception &) {
+    video_init_config["ALL_LENS_CONFIG_FILE"] >> all_lens_config_file;
+    if (all_lens_config_file.empty()) {
         LOG(ERROR) << "All lens' config file configuration not found.";
         return false;
     }
@@ -57,19 +55,20 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
 
     // Get matrix for PnP.
     std::string len_type;
-    try {
-        all_cams_config[video_init_config["CAMERA"]]["LEN"] >> len_type;
-        all_lens_config[len_type]["IntrinsicMatrix"] >> intrinsic_mat_;
-        all_lens_config[len_type]["DistortionMatrix"] >> distortion_mat_;
-    } catch (const std::exception &) {
+    all_cams_config[video_init_config["CAMERA"]]["LEN"] >> len_type;
+    all_lens_config[len_type]["IntrinsicMatrix"] >> intrinsic_mat_;
+    all_lens_config[len_type]["DistortionMatrix"] >> distortion_mat_;
+    if (intrinsic_mat_.empty() || distortion_mat_.empty()) {
         LOG(ERROR) << "Camera len configurations not found.";
+        intrinsic_mat_.release();
+        distortion_mat_.release();
         return false;
     }
 
     // Open video file.
     std::string video_file;
-    try { video_init_config["VIDEO"] >> video_file; }
-    catch (const std::exception &) {
+    video_init_config["VIDEO"] >> video_file;
+    if (video_file.empty()) {
         LOG(ERROR) << "Video configuration not found.";
         intrinsic_mat_.release();
         distortion_mat_.release();
