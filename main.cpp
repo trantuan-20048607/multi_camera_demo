@@ -5,8 +5,7 @@
 
 #include "3rdparty/easylogging++/easylogging++.h"
 
-#include "modules/image-provider-camera/image_provider_camera.h"
-#include "modules/image-provider-video/image_provider_video.h"
+#include "modules/image-provider-base/image_provider_factory.h"
 
 int main() {
     el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
@@ -19,10 +18,10 @@ int main() {
     std::cin >> c;
     std::cin.get();
     if (c == 'C' || c == 'c') {
-        ip = new ImageProviderCamera;
+        ip = IPF_CREATE_IMAGE_PROVIDER("IPCamera");
         while (!ip->Initialize("../config/camera-init.yaml")) sleep(1);
     } else {
-        ip = new ImageProviderVideo;
+        ip = IPF_CREATE_IMAGE_PROVIDER("IPVideo");
         ip->Initialize("../config/video-init.yaml");
     }
 

@@ -2,6 +2,14 @@
 
 #include "image_provider_video.h"
 
+/**
+ * \warning Image provider registry will be initialized before the program entering the main function!
+ *   This means any error occurring here will not be caught unless you're using debugger.
+ *   (Thus, do not use this variable in any other place and you should not modify it.)
+ */
+[[maybe_unused]] ImageProviderRegistry<ImageProviderVideo> ImageProviderVideo::registry_ =
+        ImageProviderRegistry<ImageProviderVideo>("IPVideo");
+
 ImageProviderVideo::~ImageProviderVideo() {
     if (video_.isOpened()) {
         video_.release();
@@ -11,6 +19,7 @@ ImageProviderVideo::~ImageProviderVideo() {
 }
 
 bool ImageProviderVideo::Initialize(const std::string &file_path) {
+    // Load initialization configuration file.
     cv::FileStorage video_init_config;
     try { video_init_config.open(file_path, cv::FileStorage::READ); }
     catch (const std::exception &) {
@@ -18,6 +27,7 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
         return false;
     }
 
+    // Load global cameras' configuration file.
     std::string all_cams_config_file;
     try { video_init_config["ALL_CAMS_CONFIG_FILE"] >> all_cams_config_file; }
     catch (const std::exception &) {
@@ -31,6 +41,7 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
         return false;
     }
 
+    // Load global lens' configuration file.
     std::string all_lens_config_file;
     try { video_init_config["ALL_LENS_CONFIG_FILE"] >> all_lens_config_file; }
     catch (const std::exception &) {
@@ -44,6 +55,7 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
         return false;
     }
 
+    // Get matrix for PnP.
     std::string len_type;
     try {
         all_cams_config[video_init_config["CAMERA"]]["LEN"] >> len_type;
@@ -54,6 +66,7 @@ bool ImageProviderVideo::Initialize(const std::string &file_path) {
         return false;
     }
 
+    // Open video file.
     std::string video_file;
     try { video_init_config["VIDEO"] >> video_file; }
     catch (const std::exception &) {

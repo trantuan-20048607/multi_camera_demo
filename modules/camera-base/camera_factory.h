@@ -7,7 +7,7 @@
 
 #include "camera_base.h"
 
-/// \brief A macro to create a camera of specified type string. For details, turn to class CameraFactory.
+/// \brief A macro to create a camera of specified type name. For details, turn to class CameraFactory.
 #define CF_CREATE_CAMERA(camera_type_name) CameraFactory::Instance().CreateCamera(camera_type_name)
 
 /**
@@ -32,7 +32,7 @@ protected:
  * \brief Singleton camera factory.
  * \details
  *   Use CameraFactory::Instance() to get the only instance pointer.  \n
- *   Use macro CF_CREATE_CAMERA(registered_type) to create a camera instance.  \n
+ *   Use macro CF_CREATE_CAMERA(camera_type_name) to create a camera instance.  \n
  *   Use CameraFactory::Instance::RegisterCamera(camera_type_name, *registry) to register a type of camera.
  * \warning
  *   Camera factory will not check whether CameraType is really subclass of Camera base class.  \n
@@ -45,7 +45,7 @@ public:
     CameraFactory &operator=(const CameraFactory &) = delete;
 
     /**
-     * \breif Get the only instance of camera factory.
+     * \brief Get the only instance of camera factory.
      * \return A camera factory object.
      */
     static CameraFactory &Instance() {
