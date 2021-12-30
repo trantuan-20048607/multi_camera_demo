@@ -1,5 +1,3 @@
-#include <execution>
-
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -18,7 +16,8 @@ int main() {
     std::cin >> c;
     std::cin.get();
     ip = IPF_CREATE_IMAGE_PROVIDER((c == 'C' || c == 'c') ? "IPCamera" : "IPVideo");
-    ip->Initialize((c == 'C' || c == 'c') ? "../config/camera-init.yaml" : "../config/video-init.yaml");
+    if (!ip->Initialize((c == 'C' || c == 'c') ? "../config/camera-init.yaml" : "../config/video-init.yaml"))
+        return 0;
 
     for (Frame frame; cv::waitKey(1) != 'q';) {
         if (ip->GetFrame(frame)) {
