@@ -3,8 +3,6 @@
 
 #include "MvCameraControl.h"
 
-#include "3rdparty/easylogging++/easylogging++.h"
-
 #include "modules/camera-base/camera_factory.h"
 
 /**
