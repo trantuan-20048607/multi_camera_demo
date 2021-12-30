@@ -35,5 +35,4 @@ int main() {
     }
 
     delete ip;
-    return 0;
 }
