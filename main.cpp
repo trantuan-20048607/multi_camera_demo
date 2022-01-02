@@ -17,6 +17,12 @@ int main() {
         return 0;
 
     for (Frame frame; cv::waitKey(1) != 'q';) {
+
+        // An example for timing a scope, only available in debug mode.
+#ifdef ELPP_FEATURE_PERFORMANCE_TRACKING
+        TIMED_SCOPE(main_loop_timed_obj, "main");
+#endif
+
         if (ip->GetFrame(frame)) {
             if (frame.time_stamp)
                 cv::putText(frame.image,
