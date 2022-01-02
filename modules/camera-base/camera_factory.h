@@ -31,9 +31,8 @@ protected:
 /**
  * \brief Singleton camera factory.
  * \details
- *   Use CameraFactory::Instance() to get the only instance pointer.  \n
- *   Use macro CF_CREATE_CAMERA(camera_type_name) to create a camera instance.  \n
- *   Use CameraFactory::Instance::RegisterCamera(camera_type_name, *registry) to register a type of camera.
+ *   For Singleton pattern, refer to https://en.wikipedia.org/wiki/Singleton_pattern.  \n
+ *   For Factory pattern, refer to https://en.wikipedia.org/wiki/Factory_method_pattern.
  * \warning
  *   Camera factory will not check whether CameraType is really subclass of Camera base class.  \n
  *   (Thus, you should ensure that all callings of CameraRegistry constructor are completely under control.)
@@ -84,7 +83,7 @@ private:
 
     ~CameraFactory() = default;
 
-    std::unordered_map<std::string, CameraRegistryBase *> camera_registry_;  // Camera registry map.
+    std::unordered_map<std::string, CameraRegistryBase *> camera_registry_;  /**< Camera registry map. */
 };
 
 /**

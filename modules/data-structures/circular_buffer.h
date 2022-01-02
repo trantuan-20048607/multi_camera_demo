@@ -7,25 +7,26 @@
 #define IP_BUFFER_SIZE 4
 
 /**
- * \brief Ring buffer with mutex.
- * \tparam Type Type of elements in this ring buffer.
- * \tparam size Max size of this ring buffer.
+ * \brief Circular buffer with mutex.
+ * \details Refer to https://en.wikipedia.org/wiki/Circular_buffer.
+ * \tparam Type Type of elements in this buffer.
+ * \tparam size Max size of this buffer.
  * \attention Size must be 2^N.
  */
 template<typename Type, unsigned int size>
-class Buffer {
+class CircularBuffer {
 private:
-    Type data_[size];
-    unsigned int head_;
-    unsigned int tail_;
-    std::mutex lock_[size];
-    std::mutex head_lock_;
-    const unsigned int and_to_mod_ = size - 1;
+    Type data_[size];                           /**< Data array. */
+    unsigned int head_;                         /**< Head pointer. */
+    unsigned int tail_;                         /**< Tail pointer. */
+    std::mutex lock_[size];                     /**< Mutex lock for data. */
+    std::mutex head_lock_;                      /**< Mutex lock for head pointer. */
+    const unsigned int and_to_mod_ = size - 1;  /**< Use bitwise operation to accelerate modulus. */
 
 public:
-    Buffer<Type, size>() : head_(0), tail_(0) {}
+    CircularBuffer<Type, size>() : head_(0), tail_(0) {}
 
-    ~Buffer() = default;
+    ~CircularBuffer() = default;
 
     /**
      * \return Size of this buffer, which is specified when it is constructed.
@@ -34,7 +35,7 @@ public:
 
     /**
      * \brief Is this buffer empty?
-     * \return A boolean shows if ring buffer is empty.
+     * \return A boolean shows if buffer is empty.
      */
     [[maybe_unused]] [[nodiscard]] inline bool Empty() const { return head_ == tail_; }
 
@@ -58,7 +59,7 @@ public:
     /**
      * \brief Pop an element.
      * \param [out] obj Output element.
-     * \return A boolean shows if ring buffer is not empty.
+     * \return A boolean shows if buffer is not empty.
      */
     inline bool Pop(Type &obj) {
         if (head_ == tail_)

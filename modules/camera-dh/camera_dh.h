@@ -277,16 +277,16 @@ private:
      */
     static void *DaemonThreadFunction(void *obj);
 
-    static uint16_t camera_count_;  // Global count of DH camera for releasing and loading library.
+    static uint16_t camera_count_;  /**< Global count of DH camera for releasing and loading library. */
 
-    GX_DEV_HANDLE device_;  // Device handle.
-    int64_t color_filter_;  // Color filter type.
-    int64_t payload_size_;  // Payload size.
+    GX_DEV_HANDLE device_;  /**< Device handle. */
+    int64_t color_filter_;  /**< Color filter type. */
+    int64_t payload_size_;  /**< Payload size. */
 
-    unsigned char *raw_8_to_rgb_24_cache_;  // Cache for converting image from raw8 to rgb24.
-    unsigned char *raw_16_to_8_cache_;      // Cache for converting image from raw16 to raw8.
+    unsigned char *raw_8_to_rgb_24_cache_;  /**< Cache for converting image from raw8 to rgb24. */
+    unsigned char *raw_16_to_8_cache_;      /**< Cache for converting image from raw16 to raw8. */
 
-    [[maybe_unused]] static CameraRegistry<DHCamera> dh_camera_registry_;  // Own registry for DH Camera.
+    [[maybe_unused]] static CameraRegistry<DHCamera> dh_camera_registry_;  /**< Own registry for DH Camera. */
 };
 
 #endif  // _DH_CAMERA_H_

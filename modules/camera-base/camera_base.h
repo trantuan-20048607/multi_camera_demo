@@ -1,8 +1,8 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "modules/image-provider-base/buffer.h"
-#include "modules/image-provider-base/frame.h"
+#include "modules/data-structures/circular_buffer.h"
+#include "modules/data-structures/frame_struct.h"
 
 /**
  * \brief Camera base class.
@@ -99,7 +99,7 @@ protected:
     bool stream_running_;                   // Flag shows if stream is running.
     pthread_t daemon_thread_id_;            // Daemon thread id.
     bool stop_daemon_thread_flag_;          // Flag to stop daemon thread.
-    Buffer<Frame, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
+    CircularBuffer<Frame, IP_BUFFER_SIZE> buffer_;  // A ring buffer to store images.
 };
 
 #endif  // _CAMERA_H_

@@ -21,9 +21,9 @@ public:
     inline bool GetFrame(Frame &frame) final { return video_.read(frame.image); }
 
 private:
-    cv::VideoCapture video_;  // Video object.
+    cv::VideoCapture video_;  /**< Video object. */
 
-    // Own registry for image provider video.
+    /** Own registry for image provider video. */
     [[maybe_unused]] static ImageProviderRegistry<ImageProviderVideo> registry_;
 };
 

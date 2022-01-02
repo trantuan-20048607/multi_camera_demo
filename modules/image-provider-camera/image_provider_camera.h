@@ -20,9 +20,9 @@ public:
     inline bool GetFrame(Frame &frame) final { return camera_->GetFrame(frame); }
 
 private:
-    Camera *camera_;  // Camera pointer.
+    Camera *camera_;  /**< Camera pointer. */
 
-    // Own registry for image provider camera.
+    /** Own registry for image provider camera. */
     [[maybe_unused]] static ImageProviderRegistry<ImageProviderCamera> registry_;
 };
 

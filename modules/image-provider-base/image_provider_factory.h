@@ -31,10 +31,8 @@ protected:
 /**
  * \brief Singleton image provider factory.
  * \details
- *   Use ImageProviderFactory::Instance() to get the only instance pointer.  \n
- *   Use macro IPF_CREATE_IMAGE_PROVIDER(ip_type_name) to create an image provider instance.  \n
- *   Use ImageProviderFactory::Instance::RegisterImageProvider(ip_type_name, *registry)
- *     to register a type of image provider.
+ *   For Singleton pattern, refer to https://en.wikipedia.org/wiki/Singleton_pattern.  \n
+ *   For Factory pattern, refer to https://en.wikipedia.org/wiki/Factory_method_pattern.
  * \warning
  *   Image provider factory will not check whether IPType is really subclass of ImageProvider base class.  \n
  *   (Thus, you should ensure that all callings of ImageProviderRegistry constructor are completely under control.)
@@ -86,7 +84,7 @@ private:
 
     ~ImageProviderFactory() = default;
 
-    std::unordered_map<std::string, ImageProviderRegistryBase *> ip_registry;  // Image provider registry map.
+    std::unordered_map<std::string, ImageProviderRegistryBase *> ip_registry;  /**< Image provider registry map. */
 };
 
 /**

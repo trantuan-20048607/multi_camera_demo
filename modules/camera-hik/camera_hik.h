@@ -104,9 +104,9 @@ private:
         return true;
     }
 
-    void *device_;  // Device handle.
+    void *device_;  /**< Device handle. */
 
-    [[maybe_unused]] static CameraRegistry<HikCamera> hik_camera_registry_;  // Own registry for Hik Camera.
+    [[maybe_unused]] static CameraRegistry<HikCamera> hik_camera_registry_;  /**< Own registry for Hik Camera. */
 };
 
 #endif  // _HIK_CAMERA_H_
