@@ -9,7 +9,7 @@
  * \warning NEVER directly use this class to create image provider!  \n
  *   Instead, turn to ImageProviderFactory class and use IPF_CREATE_IMAGE_PROVIDER("IPCamera").
  */
-class ImageProviderCamera final : public ImageProvider {
+class [[maybe_unused]] ImageProviderCamera final : public ImageProvider {
 public:
     ImageProviderCamera() : camera_(nullptr) {}
 

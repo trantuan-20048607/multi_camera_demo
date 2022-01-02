@@ -14,6 +14,8 @@ add_compile_options(
         -DAUTO_INITIALIZE_EASYLOGGINGPP
         -DELPP_THREAD_SAFE
         -DELPP_UNICODE
+        # Refer to https://github.com/amrayn/easyloggingpp#logging-flags.
+        -DELPP_DEFAULT_LOGGING_FLAGS=33093
 )
 
 # Options for different build type.
@@ -39,6 +41,8 @@ elseif (CMAKE_BUILD_TYPE STREQUAL Release)
             -DELPP_DEFAULT_LOG_FILE="../log/release.log"
             # Disable LOG(DEBUG) to improve performance.
             -DELPP_DISABLE_DEBUG_LOGS
+            # Fresh log file.
+            -DELPP_FRESH_LOG_FILE
     )
 endif ()
 

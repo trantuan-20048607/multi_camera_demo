@@ -6,9 +6,6 @@
 #include "modules/image-provider-base/image_provider_factory.h"
 
 int main() {
-    el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
-    el::Loggers::addFlag(el::LoggingFlag::MultiLoggerSupport);
-
     ImageProvider *ip;
 
     std::cout << "Input 'c' or 'C' for camera mode, otherwise for video mode: " << std::flush;

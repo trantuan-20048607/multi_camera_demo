@@ -79,20 +79,20 @@ public:
      * \param exposure_time Exposure time, automatically converted to corresponding data type.
      * \return A boolean shows if exposure time is successfully set.
      */
-    virtual bool SetExposureTime(uint32_t exposure_time) = 0;
+    [[maybe_unused]] virtual bool SetExposureTime(uint32_t exposure_time) = 0;
 
     /**
      * \brief Set gain value.
      * \param gain Gain value, automatically converted to corresponding data type.
      * \return A boolean shows if gain value is successfully set.
      */
-    virtual bool SetGainValue(float gain) = 0;
+    [[maybe_unused]] virtual bool SetGainValue(float gain) = 0;
 
     /**
      * \brief Get serial number.
      * \return Serial number of this camera.
      */
-    inline std::string GetSerialNumber() { return serial_number_; }
+    [[maybe_unused]] [[nodiscard]] inline std::string GetSerialNumber() { return serial_number_; }
 
 protected:
     std::string serial_number_;             // Serial number.
