@@ -1,7 +1,7 @@
 #ifndef _IMAGE_PROVIDER_BASE_H_
 #define _IMAGE_PROVIDER_BASE_H_
 
-#include "modules/data-structures/frame_struct.h"
+#include "modules/data-structures/frame.h"
 
 /**
  * \brief Image provider base class.

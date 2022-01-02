@@ -2,7 +2,7 @@
 #define _CAMERA_H_
 
 #include "modules/data-structures/circular_buffer.h"
-#include "modules/data-structures/frame_struct.h"
+#include "modules/data-structures/frame.h"
 
 /**
  * \brief Camera base class.
