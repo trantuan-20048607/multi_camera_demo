@@ -11,6 +11,7 @@ set(DH_GALAXY_PATH /home/trantuan/Galaxy_camera)
 # Common compile options.
 add_compile_options(
         -std=c++2a
+        -DAUTO_INITIALIZE_EASYLOGGINGPP
         -DELPP_THREAD_SAFE
         -DELPP_UNICODE
 )
